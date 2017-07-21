@@ -1,0 +1,33 @@
+#memcached rules for user nurturep
+iptables -A sg_cache -j ACCEPT -p tcp --dport 20000 -m owner --uid-owner nurturep
+iptables -A sg_cache -j DROP -p tcp --dport 20000
+#memcached rules for user florenc5
+iptables -A sg_cache -j ACCEPT -p tcp --dport 20001 -m owner --uid-owner florenc5
+iptables -A sg_cache -j DROP -p tcp --dport 20001
+### Do not remove !!! ###
+
+#GETI. Getty images. blackmailing our clients. Do not remove prior talking to NIKI
+iptables -I in_sg -s 206.28.72.0/21 -j DROP
+#GETI. PicScout. Employee office. blackmailing our clients. Do not remove prior talking to NIKI
+iptables -I in_sg -s 62.0.8.0/24 -j DROP
+#GETI. Bezeqint-Hosting. This is where the actual crawler is running from. Do not remove prior talking to NIKI
+iptables -I in_sg -s 82.80.248.0/21 -j DROP
+
+#############################
+
+iptables -t nat -A POSTROUTING -m owner --uid-owner nobody -j SNAT --to-source 181.224.158.221
+iptables -I in_sg -s 59.39.89.98 -j DROP
+iptables -I in_sg -s 97.88.47.9 -j DROP
+iptables -I in_sg -s 91.121.220.133 -j DROP
+iptables -I in_sg -s 104.200.32.211 -j DROP
+iptables -I in_sg -s 72.55.168.51 -j DROP
+iptables -I in_sg -s 103.42.178.18 -j DROP
+
+#Ticket ID: 1950842
+iptables -I OUTPUT -p tcp --dport 587 -d 0/0 -j ACCEPT
+iptables -I in_sg -s 163.172.183.165 -j DROP
+iptables -I in_sg -s 37.1.214.203 -j DROP
+iptables -I in_sg -s 155.133.64.195 -j DROP
+iptables -I in_sg -s 89.248.160.233 -j DROP #bruteforce_perma_block
+iptables -I in_sg -s 145.131.169.85 -j DROP
+
