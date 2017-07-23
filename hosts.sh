@@ -30,19 +30,22 @@ function flush_caches(){
 		do
 			/etc/init.d/dns-clean start &>/dev/null;
 		done
+		echo
 		echo "Flushed DNS caches 10 times!"
-		rm -rf /home/florienb/.cache/google-chrome
+		rm -rf /home/$(whoami)/.cache/google-chrome
 		echo "Flushed Google Chrome caches!"
+		echo
 	elif [ $platform = "mac" ]; then
 		for i in {1..10} 
 		do
 			dscacheutil -flushcache;
 			killall -HUP mDNSResponder;
 		done
+		echo
 		echo "Flushed DNS caches 10 times!"
-
-		rm -rf /Users/$whoami/Library/Caches/Google/Chrome/Default/Cache/ || echo "Could not flush Chrome cache on Mac."
+		rm -rf /Users/$(whoami)/Library/Caches/Google/Chrome/Default/Cache/ || echo "Could not flush Chrome cache on Mac."
 		echo "Flushed Google Chrome caches!"
+		echo
 	fi
 
 }
@@ -61,7 +64,7 @@ else
 	flush_caches
 	if [ $platform = "linux" ]; then
 		google-chrome $2
-	elif [ platform = "mac" ]; then
+	elif [ $platform = "mac" ]; then
 		open --new -a /Applications/Google\ Chrome.app --args $2
 	fi
 fi
@@ -72,8 +75,13 @@ read -rp "Revert changes [y/n]? " answer
 while true
 do
 	if [ $answer = "y" ] || [ $answer = "Y" ]; then
-		sed -i "/$1 $2 www.$2/d" /etc/hosts
-		break;
+		if [ $platform = "linux" ]; then
+			sed -i "/$1 $2 www.$2/d" /etc/hosts
+			break;
+		elif [ $platform = "mac" ]; then
+			sed -i "" "s/$1 $2 www.$2//g" /etc/hosts
+			break;
+		fi
 	elif [ $answer = "n" ] || [ $answer = "N" ]; then
 		echo "Changes NOT reverted"
 		break;
