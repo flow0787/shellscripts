@@ -8,3 +8,4 @@ ff00::0 ip6-mcastprefix
 ff02::1 ip6-allnodes
 ff02::2 ip6-allrouters
 
+1.2.3.1 dom.ds www.dom.ds

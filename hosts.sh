@@ -14,13 +14,20 @@ elif [[ "$unamestr" == 'Darwin' ]]; then
    platform='mac'
 fi
 
-
+domain=$(grep $2 /etc/hosts | cut -d " " -f 2 | sort | uniq)
 
 function add_to_hosts(){
-	echo
-	echo $1 $2 www.$2 >> /etc/hosts
-	echo "Added $1 $2 www.$2 to /etc/hosts"
-
+	if [ "$2" == "$domain" ]; then
+		echo
+		echo "Domain $2 is already in /etc/hosts:"
+		grep $2 /etc/hosts
+		echo
+		exit 0
+	else
+		echo
+		echo $1 $2 www.$2 >> /etc/hosts
+		echo "Added $1 $2 www.$2 to /etc/hosts"
+	fi
 }
 
 
