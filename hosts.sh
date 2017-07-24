@@ -70,7 +70,7 @@ else
 	add_to_hosts $1 $2
 	flush_caches
 	if [ $platform = "linux" ]; then
-		google-chrome $2
+		google-chrome $2 &>/dev/null
 	elif [ $platform = "mac" ]; then
 		open --new -a /Applications/Google\ Chrome.app --args $2
 	fi
