@@ -1,7 +1,11 @@
 #FTP SITE TRANSFER SCRIPT#
 
 clear;
-echo "=====BEGIN FTP SITE TRANSFER====="
+BLUE='\033[0;34m'
+DARK_RED='\033[1;31m'
+NC='\033[0m' 
+
+echo "${BLUE}-=====BEGIN FTP SITE TRANSFER=====-${NC}"
 
 
 if [ ! -d transfer ]; then
@@ -11,7 +15,7 @@ if [ ! -d transfer ]; then
 	read -p "FTP host: " ftp_host;
 	wget -mb --passive-ftp --ftp-user=$ftp_user --ftp-password=$ftp_pass ftp://$ftp_host
 else
-	echo "Transfer directory already exists:"
+	echo "${DARK_RED}transfer directory already exists:${NC}"
 	ls -lah transfer
 fi
 
