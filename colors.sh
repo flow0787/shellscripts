@@ -34,4 +34,4 @@ echo -e "\e[0;36;47m Cyan     \e[0m 0;36m \t\e[1;36;40m Dark Cyan  \e[0m 1;36m"
 echo -e "\e[0;37;47m LightGray\e[0m 0;37m \t\e[1;37;40m White      \e[0m 1;37m"
 
 
-echo -e "this is ${BLACK}BLACK${NC}"
+echo -e "this is ${CYAN}BLACK${NC}"

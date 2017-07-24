@@ -6,6 +6,7 @@ CYAN='\033[0;36m'
 DARK_RED='\033[1;31m'
 NC='\033[0m' 
 
+
 echo -e "${CYAN}-=====BEGIN LFT/SFTP SITE TRANSFER=====-${NC}"
 
 cd /home/transfer || echo "Could not cd /home/transfer directory."
@@ -19,6 +20,6 @@ if [ ! -d "$tid" ]; then
     read -rp "Site path and new path: " old_path $new_path;
 	lftp -u "$ftp_user","$ftp_pass" -e `mirror "$old_path" "$new_path"` sftp://"$ftp_host":22
 else
-    echo "${DARK_RED}$tid directory already exists:${NC}"
+    echo -e "${DARK_RED}$tid directory already exists:${NC}"
     ls -lah $tid
 fi
