@@ -88,7 +88,7 @@ function whitelistip() {
 			#backup
 			echo "#TID $1" >> $sgfirewall
 			echo "iptables -I in_sg -p tcp -s $2 --dport $3 -j ACCEPT" >> $sgfirewall
-			echo "iptables -I out_sg -p tcp -d $2 --sport $3 -j ACCEPT" >> $sgfirewall
+			echo "iptables -I out_sg -p tcp -d $2 --dport $3 -j ACCEPT" >> $sgfirewall
 			echo "==================================================================="
 			/etc/init.d/firewall restart
 			echo "==================================================================="
