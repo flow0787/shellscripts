@@ -3,7 +3,11 @@
 #//TODO:
 ####### - detect browser and flush cache per browser used
 
-
+RED='\033[0;31m'
+DARK_BLUE='\033[1;34m'
+BOLD_WHITE='\033[1;37m'
+# No Color
+NC='\033[0m' 
 
 #Detecting the OS
 platform='unknown'
@@ -19,14 +23,14 @@ domain=$(grep $2 /etc/hosts | cut -d " " -f 2 | sort | uniq)
 function add_to_hosts(){
 	if [ "$2" == "$domain" ]; then
 		echo
-		echo "Domain $2 is already in /etc/hosts:"
+		echo -e "${RED}Domain $2 is already in /etc/hosts:${NC}"
 		grep $2 /etc/hosts
 		echo
 		exit 0
 	else
 		echo
 		echo $1 $2 www.$2 >> /etc/hosts
-		echo "Added $1 $2 www.$2 to /etc/hosts"
+		echo -e "Added ${RED}$1 $2 www.$2${NC} to /etc/hosts"
 	fi
 }
 
@@ -38,9 +42,9 @@ function flush_caches(){
 			/etc/init.d/dns-clean start &>/dev/null;
 		done
 		echo
-		echo "Flushed DNS caches 10 times!"
+		echo -e "${DARK_BLUE}Flushed DNS caches 10 times!${NC}"
 		rm -rf /home/$(whoami)/.cache/google-chrome
-		echo "Flushed Google Chrome caches!"
+		echo -e "${DARK_BLUE}Flushed Google Chrome caches!${NC}"
 		echo
 	elif [ $platform = "mac" ]; then
 		for i in {1..10} 
@@ -58,13 +62,13 @@ function flush_caches(){
 }
 
 if [[ $# -eq 0 ]]; then
-	echo "USAGE: $0 IP DOMAIN"
+	echo -e "${RED}USAGE: $0 IP DOMAIN${NC}"
 	exit 0
 elif [[ $# -eq 1 ]]; then
-	echo "Script requires IP and DOMAIN as arguments."
+	echo -e "${RED}Script requires IP and DOMAIN as arguments.${NC}"
 	exit 0
 elif [[ $# -gt 2 ]]; then
-	echo "You provided more than 2 arguments."
+	echo -e "${RED}You provided more than 2 arguments.${NC}"
 	exit 0
 else
 	add_to_hosts $1 $2
@@ -90,7 +94,7 @@ do
 			break;
 		fi
 	elif [ $answer = "n" ] || [ $answer = "N" ]; then
-		echo "Changes NOT reverted"
+		echo -e "${RED}Changes NOT reverted!${NC}"
 		break;
 	else
 		read -rp "Please enter a valid option! [y/n]"
