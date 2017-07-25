@@ -31,3 +31,31 @@ iptables -I in_sg -s 155.133.64.195 -j DROP
 iptables -I in_sg -s 89.248.160.233 -j DROP #bruteforce_perma_block
 iptables -I in_sg -s 145.131.169.85 -j DROP
 
+
+#TID TESTID
+iptables -I in_sg -s 23.231.2.3 -j ACCEPT
+
+#TID TESTID
+iptables -I in_sg -s 23.231.2.3 -j ACCEPT
+
+#TID TESTID
+iptables -I in_sg -s 23.231.2.0 -j ACCEPT
+#TID TESTID
+iptables -I in_sg -s 23.231.2.1 -j DROP
+
+#TID TESTID
+iptables -I in_sg -s 23.231.2.5 -j ACCEPT
+#TID TESTID
+iptables -I in_sg -s 23.231.2.6 -j DROP
+#TID TESTID
+iptables -I in_sg -s 23.231.2.7 -j DROP
+#TID TESTID
+iptables -I in_sg -p tcp -s 23.231.2.7 --dport 39 -j ACCEPT
+iptables -I out_sg -p tcp -d 23.231.2.7 --dport 39 -j ACCEPT
+#TID TESTID
+iptables -I in_sg -p tcp -s 23.231.2.7 --dport 39 -j DROP
+#TID TESTID
+iptables -I in_sg -p tcp -s 23.231.2.7 --dport 39 -j DROP
+#TID TESTID
+iptables -I in_sg -p tcp -s 23.231.2.7 --dport 39 -j ACCEPT
+iptables -I out_sg -p tcp -d 23.231.2.7 --dport 39 -j ACCEPT
