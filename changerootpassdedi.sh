@@ -18,7 +18,7 @@ function backup() {
 
 
 new_pass=$(date | md5sum | awk {'print $1'})
-echo  "=======================================================\n"
+echo  -e "=======================================================\n"
 echo -e "     NEW PASSWORD: "${GREEN}$new_pass${NC} "\n"
 
 backup
