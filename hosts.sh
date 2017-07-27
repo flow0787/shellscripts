@@ -2,7 +2,7 @@
 
 #//TODO:
 ####### - detect browser and flush cache per browser used
-
+GREEN='\033[0;32m'
 RED='\033[0;31m'
 DARK_BLUE='\033[1;34m'
 BOLD_WHITE='\033[1;37m'
@@ -30,7 +30,7 @@ function add_to_hosts(){
 	else
 		echo
 		echo $1 $2 www.$2 >> /etc/hosts
-		echo -e "Added ${RED}$1 $2 www.$2${NC} to /etc/hosts"
+		echo -e "Added ${GREEN}$1 $2 www.$2${NC} to /etc/hosts"
 	fi
 }
 
