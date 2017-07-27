@@ -23,7 +23,7 @@ echo -e "     NEW PASSWORD: "${GREEN}$new_pass${NC} "\n"
 
 backup
 
-old_pass=$(grep root /etc/$backup_shadow)
+old_pass=$(grep -w root /etc/$backup_shadow)
 
 echo "======================================================="
 echo -e "${BOLD_WHITE}BACKUP SHADOW:${NC} "$backup_shadow
@@ -32,7 +32,7 @@ echo "======================================================="
 echo $new_pass | passwd root --stdin | grep passwd;
 echo ""
 
-new_pass_afterchange=$(grep root /etc/shadow)
+new_pass_afterchange=$(grep -w root /etc/shadow)
 
 
 function revert_changes() {
