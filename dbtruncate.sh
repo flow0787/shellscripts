@@ -19,6 +19,7 @@ TABLES=$($MYSQL -u $MUSER -p$MPASS $MDB -e 'show tables' | $AWK '{ print $1}' | 
  
 for t in $TABLES
 do
+	$MYSQL -u $MUSER -p$MPASS $MDB -e "SET FOREIGN_KEY_CHECKS=0"
 	echo "Deleting $t table from $MDB database..."
 	$MYSQL -u $MUSER -p$MPASS $MDB -e "drop table $t"
 done
