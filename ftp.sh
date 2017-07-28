@@ -20,13 +20,13 @@ else
 	echo -e "${DARK_RED}transfer directory already exists:${NC}"
 	ls -lah transfer
 fi
-
-if grep -q saved transfer/wget-log ; then
+sleep 3;
+if grep -q saved wget-log ; then
 	echo -e "${GREEN}Transfer is now in progress:${NC}"
-	grep saved transfer/wget-log | tail 
+	grep saved wget-log | tail 
 	echo "============================================================="
 else
 	echo -e "${DARK_RED}Issued detected:${NC}"
-	tail -50 transfer/wget-log
+	tail -50 wget-log
 	echo "============================================================="
 fi
