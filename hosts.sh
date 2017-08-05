@@ -1,4 +1,7 @@
 #!/bin/bash
+### SCRIPT BY FLORIN BADEA ###
+### WILL ADD A DOMAIN TO YOUR HOSTS FILE ###
+### USAGE: $0 $IP $DOMAIN ###
 
 #//TODO:
 ####### - detect browser and flush cache per browser used
