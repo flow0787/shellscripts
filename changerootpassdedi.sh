@@ -59,6 +59,7 @@ read -n 1 -s -r -p "Press any key to revert root password change."
 while true
 do
 	revert_changes
+	echo
 	echo -e "${GREEN}Password change reverted!${NC}"
 	echo
 	break
