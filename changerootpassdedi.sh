@@ -39,17 +39,28 @@ function revert_changes() {
 	sed -i "s~$new_pass_afterchange~$old_pass~g" /etc/shadow
 }
 
+#while true
+#do
+#	read -p "Revert changes? [y/n]" answer
+#	if [ $answer = "y" ] || [ $answer = "Y" ]; then
+#		revert_changes
+#		echo -e "${GREEN}Password change reverted!${NC}"
+#		break;
+#	elif [ $answer = "n" ] || [ $answer = "N" ]; then
+#		echo -e "${RED}Changes NOT reverted!${NC}"
+#		break;
+#	else
+#		read -rp "Please enter a valid option! [y/n]"
+#	fi
+#done
+
+read -n 1 -s -r -p "Press any key to revert root password change."
+
 while true
 do
-	read -p "Revert changes? [y/n]" answer
-	if [ $answer = "y" ] || [ $answer = "Y" ]; then
-		revert_changes
-		echo -e "${GREEN}Password change reverted!${NC}"
-		break;
-	elif [ $answer = "n" ] || [ $answer = "N" ]; then
-		echo -e "${RED}Changes NOT reverted!${NC}"
-		break;
-	else
-		read -rp "Please enter a valid option! [y/n]"
-	fi
+	revert_changes
+	echo
+	echo -e "${GREEN}Password change reverted!${NC}"
+	echo
+	break
 done

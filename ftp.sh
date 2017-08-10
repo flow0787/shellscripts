@@ -15,6 +15,8 @@ if [ ! -d transfer ]; then
 	read -p "FTP user: " ftp_user;
 	read -p "FTP pass: " ftp_pass;
 	read -p "FTP host (IP/PATH): " ftp_host;
+	echo "-=====  END CREDENTIALS   =====-"
+	echo
 	wget -mb --passive-ftp --ftp-user=$ftp_user --ftp-password=$ftp_pass ftp://$ftp_host
 else
 	echo -e "${DARK_RED}transfer directory already exists:${NC}"
@@ -22,11 +24,14 @@ else
 fi
 sleep 3;
 if grep -q saved wget-log ; then
+	echo
 	echo -e "${GREEN}Transfer is now in progress:${NC}"
-	grep saved wget-log | tail 
-	echo "============================================================="
+	grep saved wget-log | tail -5
+	echo "-=====END FTP SITE TRANSFER=====-"
 else
+	echo
 	echo -e "${DARK_RED}Issued detected:${NC}"
+	echo
 	tail -50 wget-log
-	echo "============================================================="
+	echo "-=====END FTP SITE TRANSFER=====-"
 fi

@@ -85,21 +85,34 @@ fi
 
 
 
-read -rp "Revert changes [y/n]? " answer
+#read -rp "Revert changes [y/n]? " answer
+#while true
+#do
+#	if [ $answer = "y" ] || [ $answer = "Y" ]; then
+#		if [ $platform = "linux" ]; then
+#			sed -i "/$1 $2 www.$2/d" /etc/hosts
+#			break;
+#		elif [ $platform = "mac" ]; then
+#			sed -i "" "s/$1 $2 www.$2//g" /etc/hosts
+#			break;
+#		fi
+#	elif [ $answer = "n" ] || [ $answer = "N" ]; then
+#		echo -e "${RED}Changes NOT reverted!${NC}"
+#		break;
+#	else
+#		read -rp "Please enter a valid option! [y/n]"
+#	fi
+#done
+read -n 1 -s -r -p "Press any key to revert changes."
 while true
 do
-	if [ $answer = "y" ] || [ $answer = "Y" ]; then
-		if [ $platform = "linux" ]; then
-			sed -i "/$1 $2 www.$2/d" /etc/hosts
-			break;
-		elif [ $platform = "mac" ]; then
-			sed -i "" "s/$1 $2 www.$2//g" /etc/hosts
-			break;
-		fi
-	elif [ $answer = "n" ] || [ $answer = "N" ]; then
-		echo -e "${RED}Changes NOT reverted!${NC}"
+	if [ $platform = "linux" ]; then
+		sed -i "/$1 $2 www.$2/d" /etc/hosts
+		echo
 		break;
-	else
-		read -rp "Please enter a valid option! [y/n]"
+	elif [ $platform = "mac" ]; then
+		sed -i "" "s/$1 $2 www.$2//g" /etc/hosts
+		echo
+		break;
 	fi
 done
