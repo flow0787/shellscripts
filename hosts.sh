@@ -64,6 +64,7 @@ function flush_caches(){
 
 }
 
+
 if [[ $# -eq 0 ]]; then
 	echo -e "${RED}USAGE: $0 IP DOMAIN${NC}"
 	exit 0
@@ -76,8 +77,8 @@ elif [[ $# -gt 2 ]]; then
 else
 	add_to_hosts $1 $2
 	flush_caches
-	if [ $platform = "linux" ]; then
-		google-chrome $2 &>/dev/null
+	if [[ $platform = "linux" ]]; then
+		google-chrome --no-sandbox $2 &>/dev/null
 	elif [ $platform = "mac" ]; then
 		open --new -a /Applications/Google\ Chrome.app --args $2
 	fi
