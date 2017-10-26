@@ -16,24 +16,28 @@ sgfirewall=/root/admin/sgfirewall
 ip=$(iptables -n -L | grep $2 | awk {'print $4'})
 port=$(netstat -ant | grep LISTEN | sed -n 's/^[^:]*:\([0-9]\+\) .*$/\1/p'| uniq)
 
+function grep_ip() {
 
+		echo "==================================================================="
+		echo -e "${GREEN}IP >>>> $2 <<<< blacklisted!${NC}"
+		echo -en "			${DARK_BLUE}$sgfirewall:${NC} ";echo; grep $2 $sgfirewall
+		echo -en "			${DARK_BLUE}iptables:${NC} ";echo; iptables -n -L | grep $2
+		echo "==================================================================="
+
+}
 function blacklistip() {
 	if [[ $# -eq 2 ]]; then
 		if [ "$2" == "$ip" ] || grep -q $2 $sgfirewall ; then
 			echo -e "${DARK_RED}>>>> $2 <<<<${NC} ${RED}is already in iptables:${NC}"
-			echo -en "${DARK_BLUE}$sgfirewall:${NC} "; grep $2 $sgfirewall
-			echo -en "${DARK_BLUE}iptables:${NC} "; iptables -n -L | grep $2
+			grep_ip()
 		else
 			#backup
 			echo "#TID $1" >> $sgfirewall
 			echo "iptables -I in_sg -s $2 -j DROP" >> $sgfirewall
 			echo "==================================================================="
 			/etc/init.d/firewall restart
-			echo "==================================================================="
-			echo -e "${GREEN}IP >>>> $2 <<<< blacklisted!${NC}"
-			echo -en "			${DARK_BLUE}$sgfirewall:${NC} ";echo; grep $2 $sgfirewall
-			echo -en "			${DARK_BLUE}iptables:${NC} ";echo; iptables -n -L | grep $2
-			echo "==================================================================="
+
+			grep_ip()
 
 		fi
 	elif [[ $# -eq 3 ]]; then
@@ -47,11 +51,7 @@ function blacklistip() {
 			echo "iptables -I in_sg -p tcp -s $2 --dport $3 -j DROP" >> $sgfirewall
 			echo "==================================================================="
 			/etc/init.d/firewall restart
-			echo "==================================================================="
-			echo -e "${GREEN}Port >>>> $3 <<<< on IP >>>> $2 <<<< blocked!${NC}"
-			echo -en "			${DARK_BLUE}$sgfirewall:${NC} ";echo; grep $2 $sgfirewall
-			echo -en "			${DARK_BLUE}iptables:${NC} ";echo; iptables -n -L | grep $2
-			echo "==================================================================="
+			grep_ip()
 		fi
 	else
 		echo "Please add the IP as second argument!"
@@ -72,17 +72,12 @@ function whitelistip() {
 		echo "iptables -I in_sg -s $2 -j ACCEPT" >> $sgfirewall
 		echo "==================================================================="
 		/etc/init.d/firewall restart
-		echo "==================================================================="
-		echo -e "${GREEN}IP >>>> $2 <<<< whitelisted!${NC}"
-		echo -en "			${DARK_BLUE}$sgfirewall:${NC} " ;echo; grep $2 $sgfirewall
-		echo -en "			${DARK_BLUE}iptables:${NC} " ;echo; iptables -n -L | grep $2
-		echo "==================================================================="
+		grep_ip()
 	fi
 	elif [[ $# -eq 3 ]]; then
 		if [ "$2" == "$ip" ] || grep -q $2 $sgfirewall && [ "$3" == "$port" ]; then
 			echo -e "${DARK_RED}>>>> $2 $3 <<<<${NC} ${RED}is already in iptables:${NC}"
-			echo -en "			${DARK_BLUE}$sgfirewall:${NC} " ;echo; grep $2 $sgfirewall
-			echo -en "			${DARK_BLUE}iptables:${NC} " ;echo; iptables -n -L | grep $2
+			grep_ip()
 		else
 			#backup
 			echo "#TID $1" >> $sgfirewall
@@ -90,11 +85,7 @@ function whitelistip() {
 			echo "iptables -I out_sg -p tcp -d $2 --dport $3 -j ACCEPT" >> $sgfirewall
 			echo "==================================================================="
 			/etc/init.d/firewall restart
-			echo "==================================================================="
-			echo -e "${GREEN}Port >>>> $3 <<<< on IP >>>> $2 <<<< whitelisted!${NC}"
-			echo -en "			${DARK_BLUE}$sgfirewall:${NC} " ;echo; grep $2 $sgfirewall
-			echo -en "			${DARK_BLUE}iptables:${NC} " ;echo; iptables -n -L | grep $2
-			echo "==================================================================="
+			grep_ip()
 		fi
 	else
 		echo "Please add the IP as second argument!"
