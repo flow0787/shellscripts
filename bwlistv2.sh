@@ -29,7 +29,8 @@ function blacklistip() {
 	if [[ $# -eq 2 ]]; then
 		if [ "$2" == "$ip" ] || grep -q $2 $sgfirewall ; then
 			echo -e "${DARK_RED}>>>> $2 <<<<${NC} ${RED}is already in iptables:${NC}"
-			grep_ip()
+			echo -en "${DARK_BLUE}$sgfirewall:${NC} "; grep $2 $sgfirewall
+			echo -en "${DARK_BLUE}iptables:${NC} "; iptables -n -L | grep $2
 		else
 			#backup
 			echo "#TID $1" >> $sgfirewall
