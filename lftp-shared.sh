@@ -12,14 +12,13 @@ $new_path=transfer/
 
 if [ ! -d transfer ]; then
 	mkdir transfer; cd transfer;
-    read -rp "sFTP user and sFtp pass: " ftp_user ftp_pass;
-    read -rp "sFTP host: " ftp_host;
+    read -rp "sFTP user and sFTP pass: " sftp_user sftp_pass;
     read -rp "Remote path: " old_path;
-	read -p "sFTP host: " ftp_host;
+	read -p "sFTP host: " sftp_host;
 	echo "-=====  END CREDENTIALS   =====-"
 	echo
-	lftp -u "$ftp_user","$ftp_pass" -e `mirror "$old_path" "$new_path"` sftp://"$ftp_host":22
+	lftp -u "$sftp_user","$sftp_pass" -e `mirror "$old_path" "$new_path"` sftp://"$sftp_host":22
 else
-    echo -e "${DARK_RED}$tid directory already exists:${NC}"
-    ls -lah $tid
+    echo -e "${DARK_RED}transfer/ directory already exists:${NC}"
+    ls -lah transfer/
 fi

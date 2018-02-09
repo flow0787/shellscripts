@@ -127,12 +127,14 @@ elif [[ $# -eq 2 ]] || [[ $# -eq 3 ]]; then
 		    break
 	    elif [[ $answer = "w" ]] || [[ $answer = "W" ]] && [[ $# -eq 2 ]]; then
 	        	whitelistip $1 $2
+	        	/scripts/cphulkdwhitelist $2
 	        	break
 	    elif [[ $answer = "b" ]] || [[ $answer = "B" ]] && [[ $# -eq 3 ]]; then
 	    	blacklistip $1 $2 $3
 	    	break
 	    elif [[ $answer = "w" ]] || [[ $answer = "W" ]] && [[ $# -eq 3 ]]; then
 	    	whitelistip $1 $2 $3
+	    	/scripts/cphulkdwhitelist $2
 	    	break
 
 	    fi
