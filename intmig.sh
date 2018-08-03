@@ -19,7 +19,7 @@ disk_usage=$(du -sh /home/$user | awk {'print $1'} | sed 's/G//g'| sed 's/M//g')
 primary_domain=$(grep $user /etc/trueuserdomains | cut -d : -f 1)
 
 #IF USER EXISTS ON THE SERVER 
-if [[ "$user" == "$(grep $user /etc/trueuserowners | cut -d : -f 1)" ]]; then
+if grep -q $user /etc/trueuserowners; then
 
 	#IF WE HAVE USER AND SERVER AS ARGUMENTS
 	if [[ $# -eq 2 ]]; then
