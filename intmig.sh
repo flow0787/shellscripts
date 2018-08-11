@@ -6,6 +6,13 @@
 #requirements    : SHELL
 #=============================================================================
 
+
+#		TO-DO:
+#1. add hostname based download URL 
+#2. do script arguments verification/validation
+#3. fix current domain-based download URL
+#4. fix the rsync generation url to show from source to dest and from dest to source
+
 #COLORS
 GREEN='\033[0;32m'
 DARK_BLUE='\033[1;34m'
