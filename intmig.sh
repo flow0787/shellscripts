@@ -51,7 +51,9 @@ if grep -q $user /etc/trueuserowners; then
 		chmod 644 /home/cpmove-$user.tar.gz;
 		mv /home/cpmove-$user.tar.gz /home/$user/public_html;
 		echo -en "${DARK_BLUE}Your download URL:${NC} ";
-		echo "http://$primary_domain/cpmove-tar.gz"
+		echo "http://$primary_domain/cpmove-$user.tar.gz"
+		echo -en "${DARK_BLUE}Hostname-based download URL:${NC} "
+		echo "http://$current_server/~$user/cpmove-$user.tar.gz"
 
 	#If usage above 25 GB skip the home folder
 	else
