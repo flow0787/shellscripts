@@ -30,10 +30,10 @@ current_server=$(hostname)
 
 
 #IF WE HAVE USER AND SERVER AS ARGUMENTS
-if [[ $# -lt 2 ]]; then
+if [[ "$#" -lt 2 ]]; then
 
-echo -e "${DARK_BLUE}This script requires 2 arguments (user and server shortname)!${NC}"
-exit 1
+	echo -e "${DARK_BLUE}This script requires 2 arguments (user and server shortname)!${NC}"
+	exit 1
 
 fi
 
@@ -59,7 +59,7 @@ if grep -q $user /etc/trueuserowners; then
 		echo -en "${DARK_BLUE}Your download URL:${NC} ";
 		echo "http://$primary_domain/cpmove-$user.tar.gz"
 		echo -en "${DARK_BLUE}Hostname-based download URL:${NC} "
-		echo "$http://$current_server/~$user/cpmove-$user.tar.gz"
+		echo "http://$current_server/~$user/cpmove-$user.tar.gz"
 		echo -e "${GREEN}SHELL ENABLED! Disable SHELL once rsync is done!${NC}";
 		chsh -s /bin/bash $user;
 		echo -en "${DARK_BLUE}Your rsync command:${NC} ";
