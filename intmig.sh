@@ -12,7 +12,7 @@
 #2. do script arguments verification/validation - WIP
 #3. fix current domain-based download URL - done
 #4. fix the rsync generation url to show from source to dest and from dest to source - done
-#5. fix disk usage check (if 500MB it sees it above 20 GB and does skiphomedir)
+#5. fix disk usage check (if 500MB it sees it above 20 GB and does skiphomedir) - done
 
 #COLORS
 GREEN='\033[0;32m'
@@ -23,9 +23,9 @@ NC='\033[0m'
 
 user=$1
 destination=$2
-disk_usage=$(du -sh /home/$user | awk {'print $1'} | sed 's/G//g'| sed 's/M//g')
+disk_usage=$(du -sk /home/$user | awk {'print $1'})
 #APROXIMATE TO INTEGER
-disk_usage=$(printf "%.0f" $disk_usage)
+#disk_usage=$(printf "%.0f" $disk_usage)
 primary_domain=$(grep $user /etc/trueuserdomains | cut -d : -f 1)
 current_server=$(hostname)
 
@@ -44,8 +44,8 @@ fi
 #IF USER EXISTS ON THE SERVER 
 if grep -q $user /etc/trueuserowners; then
 #If account's disk usage below 25 GB
-	if [[ "$disk_usage" -le 25 ]]; then
-		echo -e "${GREEN}Disk usage under 25GB, starting pkgacct:${NC}"
+	if [[ "$disk_usage" -le 20000000 ]]; then
+		echo -e "${GREEN}Disk usage under 20GB, starting pkgacct:${NC}"
 		/usr/local/cpanel/bin/cpuwatch 8 /scripts/pkgacct $user;
 		chown $user:$user /home/cpmove-$user.tar.gz;
 		chmod 644 /home/cpmove-$user.tar.gz;
@@ -55,7 +55,7 @@ if grep -q $user /etc/trueuserowners; then
 
 	#If usage above 25 GB skip the home folder
 	else
-		echo -e "${RED}Disk usage over 25 GB, packaging account without home:${NC}"
+		echo -e "${RED}Disk usage over 20GB, packaging account without home:${NC}"
 		/usr/local/cpanel/bin/cpuwatch 8 /scripts/pkgacct --skiphomedir $user;
 		chown $user:$user /home/cpmove-$user.tar.gz;
 		chmod 644 /home/cpmove-$user.tar.gz;
