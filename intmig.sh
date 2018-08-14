@@ -34,7 +34,7 @@ if [[ "$#" -eq 0 ]]; then
 
 	echo -e "${DARK_BLUE}This script requires 2 arguments (user and server shortname)!${NC}"
 	exit 1
-elif [[ "$#" -lt 2 ]]; then
+elif [[ "$#" -eq 1 ]]; then
 	echo -e "${DARK_BLUE}This script requires 2 arguments (user and server shortname)!${NC}"
 	exit 1
 fi
