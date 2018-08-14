@@ -30,11 +30,13 @@ current_server=$(hostname)
 
 
 #IF WE HAVE USER AND SERVER AS ARGUMENTS
-if [[ "$#" -lt 2 ]]; then
+if [[ "$#" -eq 0 ]]; then
 
 	echo -e "${DARK_BLUE}This script requires 2 arguments (user and server shortname)!${NC}"
 	exit 1
-
+elif [[ "$#" -lt 2 ]]; then
+	echo -e "${DARK_BLUE}This script requires 2 arguments (user and server shortname)!${NC}"
+	exit 1
 fi
 
 #IF USER EXISTS ON THE SERVER 
