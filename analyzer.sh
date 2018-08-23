@@ -65,6 +65,7 @@ function top_ten_ip(){
 		echo "No traffic for this account's domains for the past 5 days ... ";
 	else
 		zcat $path/* |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $1, $12, $18}' | sort | uniq -c | sort -fr | head
+	fi
 	echo ;
 }
 
