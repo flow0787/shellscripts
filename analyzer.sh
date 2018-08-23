@@ -8,6 +8,7 @@
 # -------------------------------------------------------------------------
 # LOG FILTER:
 # https://stackoverflow.com/questions/7706095/filter-log-file-entries-based-on-date-range
+clear;
 
 user=$1
 month=$2
@@ -48,7 +49,7 @@ echo ;
 echo " === Top 10 IPs For Top 5 Sites For Past 5 Days =========";
 for i in $(ls -lahS logs/ | grep $month | head -3 | awk {'print $9'})
 do 
-		echo -en "=== " $i|cut -d - -f1; zcat logs/$i |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $1, $12, $18}' | sort | uniq -c | sort -fr | head; echo -en "\n";
+		echo -en " --> " $i|cut -d - -f1; zcat logs/$i |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $1, $12, $18}' | sort | uniq -c | sort -fr | head; echo -en "\n";
 done
 echo ;
 
