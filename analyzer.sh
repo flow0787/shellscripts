@@ -50,7 +50,7 @@ function cl_faults(){
 #Getting top 3 most intensive domains for the entire month
 function top_three(){
 	echo " === Top 3 Active Domains ===============================";
-	for i in $(ls -lahS $path | head -4 | awk {'print $9'})
+	for i in $(ls -hS $path | head -3 | awk {'print $9'})
 	do 
 			echo -en $i|cut -d - -f1; zcat $path/$i|wc -l
 	done
@@ -68,7 +68,7 @@ function top_ten_ip(){
 #Getting top 10 IPs and user agent for top 3 most intensive domains for past 5 days
 #function top_ten_three(){
 	#echo " === Top 10 IPs For Top 3 Sites For Past 5 Days =========";
-	#for i in $(ls -lahS $path | head -4 | awk {'print $9'})
+	#for i in $(ls -hS $path | head -3 | awk {'print $9'})
 	#do 
 	#		echo -en " --> " $i|cut -d - -f1; zcat $path/$i |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $1, $12, $18}' | sort | uniq -c | sort -fr | head; echo -en "\n";
 	#done
@@ -81,6 +81,7 @@ function top_ten_content(){
 	zcat $path/* |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $7}' | sort | uniq -c | sort -fr | head
 }
 
+#Run the script if not root and user exists
 if [[ $user = "root" ]]; then
 	echo "Cannot run for root ... "
 	exit 0
