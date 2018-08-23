@@ -32,6 +32,7 @@ function general_info(){
 	if [[ -f /var/cpanel/suspended/$user ]]; then 
 		if [[ $(cat /var/cpanel/suspended/$user | wc =l) -eq "0" ]]; then
 		echo "Suspended without note"; 
+	fi
 	else 
 		echo "Not Suspended";
 	fi 
