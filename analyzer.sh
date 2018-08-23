@@ -84,7 +84,7 @@ function top_ten_content(){
 if [[ $user = "root" ]]; then
 	echo "Cannot run for root ... "
 	exit 0
-elif [[ grep -q $user /etc/trueuserowners ]]; then
+elif grep -q $user /etc/trueuserowners; then
 	general_info
 	domains_info
 	cl_faults
@@ -93,3 +93,4 @@ elif [[ grep -q $user /etc/trueuserowners ]]; then
 	top_ten_content
 else
 	echo "User does not exist on this server ... " 
+fi
