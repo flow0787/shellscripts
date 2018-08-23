@@ -45,8 +45,8 @@ function domains_info(){
 function cl_faults(){
 	echo " === CL faults for past 10 days ===========================";
 	lveinfo --user $user --period 10d --time-unit 1d --show-columns From To NprocF EPf VMemF PMemF CPUf IOf IOPSf
-}	echo;
-
+	echo;
+}
 #Getting top 3 most intensive domains for the entire month
 function top_three(){
 	echo " === Top 3 Active Domains ===============================";
