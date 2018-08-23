@@ -8,22 +8,22 @@
 # -------------------------------------------------------------------------
 # LOG FILTER:
 # https://stackoverflow.com/questions/7706095/filter-log-file-entries-based-on-date-range
-clear;
 
 user=$1
-month=$2
-path=/home/$user/logs/
+#month=$2
+path=/home/$user/logs
 
 if [[ $# -eq 0 ]]; then
 	echo -e "Please provide user and month as arguments."
 	exit 0
-elif [[ $# -eq 1 ]]; then
-	echo -e "Script requires USER and MONTH as arguments."
-	exit 0
+#elif [[ $# -eq 1 ]]; then
+#	echo -e "Script requires USER and MONTH as arguments."
+#	exit 0
 elif [[ $# -gt 2 ]]; then
 	echo -e "You provided more than 2 arguments! Exitting ..."
 	exit 0
 fi
+clear;
 
 echo ;
 #Getting general account information
@@ -55,19 +55,19 @@ echo ;
 
 #Getting top 10 IPs and user agent for all domains for the last 5 days
 echo " === Top 10 IP Addresses ================================";
-zcat logs/*-$month-* |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $1, $12, $18}' | sort | uniq -c | sort -fr | head
+zcat $path/* |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $1, $12, $18}' | sort | uniq -c | sort -fr | head
 echo ;
 
 #Getting top 10 IPs and user agent for top 3 most intensive domains for past 5 days
-echo " === Top 10 IPs For Top 5 Sites For Past 5 Days =========";
-for i in $(ls -lahS logs/ | grep $month | head -3 | awk {'print $9'})
-do 
-		echo -en " --> " $i|cut -d - -f1; zcat logs/$i |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $1, $12, $18}' | sort | uniq -c | sort -fr | head; echo -en "\n";
-done
-echo ;
+#echo " === Top 10 IPs For Top 3 Sites For Past 5 Days =========";
+#for i in $(ls -lahS $path | head -4 | awk {'print $9'})
+#do 
+#		echo -en " --> " $i|cut -d - -f1; zcat $path/$i |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $1, $12, $18}' | sort | uniq -c | sort -fr | head; echo -en "\n";
+#done
+#echo ;
 
 #Getting top 10 most accessed content for all sites for past 5 days
 echo " === Top 10 Most Accessed Content/Files =================="; 
-zcat logs/*-$month-* |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $7}' | sort | uniq -c | sort -fr | head
+zcat $path/* |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $7}' | sort | uniq -c | sort -fr | head
 
 
