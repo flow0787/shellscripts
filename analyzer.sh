@@ -28,6 +28,12 @@ function general_info(){
 	echo " === General Info =============";
 	echo -en "username\t: $user \n";
 	echo -en "hosting plan\t: " ; grep PLAN /var/cpanel/users/$user | cut -d = -f2
+	echo -en "suspended\t: ";
+	if [[ -f /var/cpanel/suspend/$user ]]; then 
+		cat /var/cpanel/suspended/$user; 
+	else 
+		echo "Not suspended";
+	fi 
 	echo ;
 }
 
@@ -43,13 +49,13 @@ function domains_info(){
 
 #Getting CloudLinux faults/info for the past 10 days for the account
 function cl_faults(){
-	echo " === CL faults for past 10 days ===========================";
+	echo " === CL Faults for Past 10 Days ===========================";
 	lveinfo --user $user --period 10d --time-unit 1d --show-columns From To NprocF EPf VMemF PMemF CPUf IOf IOPSf
 	echo;
 }
 #Getting top 3 most intensive domains for the entire month
 function top_three(){
-	echo " === Top 3 Active Domains ===============================";
+	echo " === Top 3 Active Domains for the Entire Month ============";
 	for i in $(ls -hS $path | grep gz| head -3)
 	do 
 			echo -e $(echo -en $i|cut -d - -f1) " \t : \t"$(zcat $path/$i|wc -l)
