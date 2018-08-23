@@ -19,7 +19,7 @@ if [[ $# -eq 0 ]]; then
 #elif [[ $# -eq 1 ]]; then
 #	echo -e "Script requires USER and MONTH as arguments."
 #	exit 0
-elif [[ $# -gt 2 ]]; then
+elif [[ $# -gt 1 ]]; then
 	echo -e "You provided more than 2 arguments! Exitting ..."
 	exit 0
 fi
