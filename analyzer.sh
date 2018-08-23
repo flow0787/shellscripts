@@ -62,7 +62,7 @@ function top_three(){
 function top_ten_ip(){
 	echo " === Top 10 IP Addresses ================================";
 	if [[ $(zcat $path/* |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $1, $12, $18}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
-		echo "No traffic for this account's domains for the past 5 days ... ";
+		echo "There is no traffic to show for the past 5 days ... ";
 	else
 		zcat $path/* |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $1, $12, $18}' | sort | uniq -c | sort -fr | head
 	fi
@@ -83,7 +83,7 @@ function top_ten_ip(){
 function top_ten_content(){
 	echo " === Top 10 Most Accessed Content/Files =================="; 
 	if [[ $(zcat $path/* |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $7}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
-		echo "There is no traffic to show for the past 5 days ... "
+		echo "There is no traffic to show for the past 5 days ... ";
 	else
 		zcat $path/* |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $7}' | sort | uniq -c | sort -fr | head
 	fi
