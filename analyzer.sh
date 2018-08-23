@@ -14,14 +14,13 @@ user=$1
 path=/home/$user/logs
 
 if [[ $# -eq 0 ]]; then
-	echo -e "Please provide user and month as arguments."
+	echo -e "Please provide a cPanel user ..."
 	exit 0
-#elif [[ $# -eq 1 ]]; then
-#	echo -e "Script requires USER and MONTH as arguments."
-#	exit 0
 elif [[ $# -gt 1 ]]; then
-	echo -e "You provided more than 2 arguments! Exitting ..."
+	echo -e "You provided more than 1 arguments! Exitting ..."
 	exit 0
+elif [ $user = "root" ]; then
+	echo "Cannot run for root! Exitting ..."
 fi
 clear;
 
