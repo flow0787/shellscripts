@@ -82,8 +82,14 @@ function top_ten_ip(){
 #Getting top 10 most accessed content for all sites for past 5 days
 function top_ten_content(){
 	echo " === Top 10 Most Accessed Content/Files =================="; 
-	zcat $path/* |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $7}' | sort | uniq -c | sort -fr | head
+	if [[ $(zcat $path/* |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $7}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
+		echo "There is no traffic to show for the past 5 days ... "
+	else
+		zcat $path/* |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $7}' | sort | uniq -c | sort -fr | head
+	fi
 }
+
+
 
 #Run the script if not root and user exists
 if [[ $user = "root" ]]; then
