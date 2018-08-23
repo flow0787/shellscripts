@@ -52,7 +52,7 @@ function top_three(){
 	echo " === Top 3 Active Domains ===============================";
 	for i in $(ls -hS $path | grep gz| head -3)
 	do 
-			echo -e $(echo -en $i|cut -d - -f1) " \t : \t"$(zcat logs/$i|wc -l)
+			echo -e $(echo -en $i|cut -d - -f1) " \t : \t"$(zcat $path/$i|wc -l)
 	done
 	echo ;
 }
