@@ -30,7 +30,7 @@ function general_info(){
 	echo -en "hosting plan\t: " ; grep PLAN /var/cpanel/users/$user | cut -d = -f2
 	echo -en "suspended\t: ";
 	if [[ -f /var/cpanel/suspended/$user ]]; then 
-		if [[ $(cat /var/cpanel/suspended/$user | wc =l) -eq "0" ]]; then
+		if [[ $(cat /var/cpanel/suspended/$user | wc -l) -eq "0" ]]; then
 		echo "Suspended without note"; 
 	fi
 	else 
