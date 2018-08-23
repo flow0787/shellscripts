@@ -30,9 +30,11 @@ function general_info(){
 	echo -en "hosting plan\t: " ; grep PLAN /var/cpanel/users/$user | cut -d = -f2
 	echo -en "suspended\t: ";
 	if [[ -f /var/cpanel/suspended/$user ]]; then 
-		if [[ $(cat /var/cpanel/suspended/$user | wc -l) -eq "0" ]]; then
-		echo "Suspended without note"; 
-	fi
+		if [[ -s /var/cpanel/suspended/$user ]]; then
+		cat /var/cpanel/suspended/$user
+		else
+		echo "Suspended without notes!"
+		fi
 	else 
 		echo "Not Suspended";
 	fi 
