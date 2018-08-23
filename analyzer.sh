@@ -15,7 +15,7 @@ month=$2
 path=/home/$user/logs/
 
 if [[ $# -eq 0 ]]; then
-	echo -e "USAGE: $0 USER MONTH{NC}"
+	echo -e "Please provide user and month as arguments."
 	exit 0
 elif [[ $# -eq 1 ]]; then
 	echo -e "Script requires USER and MONTH as arguments."
