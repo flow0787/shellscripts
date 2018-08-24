@@ -57,15 +57,18 @@ function cl_faults(){
 	lveinfo --user $user --period 10d --time-unit 1d --show-columns From To NprocF EPf VMemF PMemF CPUf IOf IOPSf
 	echo;
 }
+
 #Getting top 3 most intensive domains for the entire month
 function top_three(){
 	echo " === Top 3 Active Domains for the Entire Month ============";
-	for i in $(ls -hS $path | grep gz| head -3)
+	for i in $(ls -hS $path | grep gz| head -3 | awk '!seen[$0]++')
 	do 
 			echo -e $(echo -en $i|cut -d - -f1) " \t : \t"$(zcat $path/$i|wc -l)
 	done
 	echo ;
 }
+
+
 
 
 #Getting top 10 IPs and user agent for all domains for the last 5 days
