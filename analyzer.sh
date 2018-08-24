@@ -63,7 +63,7 @@ function top_three(){
 	echo " === Top 3 Active Domains for the Entire Month ============";
 	for i in $(ls -hS $path | grep gz| head -3 | awk '!seen[$0]++')
 	do 
-			echo -e $(echo -en $i|cut -d - -f1) " \t : \t"$(zcat $path/$i|wc -l)
+			echo -e $(echo -en $i) " \t : \t"$(zcat $path/$i|wc -l)
 	done
 	echo ;
 }
