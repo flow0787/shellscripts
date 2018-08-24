@@ -61,9 +61,11 @@ function cl_faults(){
 #Getting top 3 most intensive domains for the entire month
 function top_three(){
 	echo " === Top 3 Active Domains for the Entire Month ============";
-	for i in $(ls -hS $path | grep gz| head -3 | awk '!seen[$0]++')
+	echo -en "          Domain                Hits     GET      POST   OTHER \n------------------------       -----    ------    -----   -----\n";	
+	for i in $(ls -hS $path | grep gz| head -3)
 	do 
-			echo -e $(echo -en $i) " \t : \t"$(zcat $path/$i|wc -l)
+			#echo -e $(echo -en $i) " \t : \t"$(zcat $path/$i|wc -l)
+			echo -e $(echo -en $i|cut -d - -f1) " \t"$(zcat logs/$i|wc -l) " \t" $(zcat logs/$i|grep GET -c) "\t" $(zcat logs/$i|grep POST -c) "\t" $(zcat logs/$i|egrep "HEAD|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH" -c)
 	done
 	echo ;
 }
