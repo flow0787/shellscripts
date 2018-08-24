@@ -65,7 +65,7 @@ function top_three(){
 	for i in $(ls -hS $path | grep gz| head -3)
 	do 
 			#echo -e $(echo -en $i) " \t : \t"$(zcat $path/$i|wc -l)
-			echo -e $(echo -en $i|cut -d - -f1) " \t"$(zcat logs/$i|wc -l) " \t" $(zcat logs/$i|grep GET -c) "\t" $(zcat logs/$i|grep POST -c) "\t" $(zcat logs/$i|egrep "HEAD|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH" -c)
+			echo -e $(echo -en $i|cut -d - -f1) " \t"$(zcat $path/$i|wc -l) " \t" $(zcat $path/$i|grep GET -c) "\t" $(zcat $path/$i|grep POST -c) "\t" $(zcat $path/$i|egrep "HEAD|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH" -c)
 	done
 	echo ;
 }
