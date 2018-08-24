@@ -18,7 +18,7 @@ if [[ $# -eq 0 ]]; then
 	echo -e "Please provide a cPanel user ..."
 	exit 0
 elif [[ $# -gt 1 ]]; then
-	echo -e "You provided more than 1 arguments! Exitting ..."
+	echo -e "You provided more than 1 argument! Exitting ..."
 	exit 0
 fi
 echo ;
@@ -45,9 +45,9 @@ function general_info(){
 function domains_info(){
 	echo " === Domains Information ======";
 	echo -en "primary\t: "; grep $user /etc/trueuserdomains | cut -d : -f1;
-	echo -en "addons\t: "; sed -n '/addon_domains:/,/main_domain:/p' /var/cpanel/userdata/$user/main | grep -v addon_domains | grep -v main_domain |wc -l;
-	echo -en "subs\t: "; sed -n '/sub_domains:/,//p' /var/cpanel/userdata/$user/main | grep -v sub_domains:| wc -l;
-	echo -en "parked\t: "; sed -n '/parked_domains:/,/sub_domains:/p' /var/cpanel/userdata/$user/main | grep -v parked_domains | grep -v sub_domains |wc -l
+	echo -en "addons\t: "; sed -n '/addon_domains:/,/main_domain:/p' /var/cpanel/userdata/$user/main | grep -v addon_domains | grep -v main_domain | sed '/^\s*$/d'| wc -l;
+	echo -en "subs\t: "; sed -n '/sub_domains:/,//p' /var/cpanel/userdata/$user/main | grep -v sub_domains:| sed '/^\s*$/d'| wc -l;
+	echo -en "parked\t: "; sed -n '/parked_domains:/,/sub_domains:/p' /var/cpanel/userdata/$user/main | grep -v parked_domains | grep -v sub_domains | sed '/^\s*$/d'| wc -l
 	echo ;
 }
 
