@@ -43,8 +43,8 @@ fi
 
 #IF USER EXISTS ON THE SERVER 
 if grep -q $user /etc/trueuserowners; then
-#If account's disk usage below 25 GB
-	if [[ "$disk_usage" -le 20000000 ]]; then
+#If account's disk usage below 10 GB
+	if [[ "$disk_usage" -le 10000000 ]]; then
 		echo -e "${GREEN}Disk usage under 20GB, starting pkgacct:${NC}"
 		/usr/local/cpanel/bin/cpuwatch 8 /scripts/pkgacct $user;
 		chown $user:$user /home/cpmove-$user.tar.gz;
@@ -55,9 +55,9 @@ if grep -q $user /etc/trueuserowners; then
 		echo -en "${DARK_BLUE}Hostname-based download URL:${NC} "
 		echo "http://$current_server/~$user/cpmove-$user.tar.gz"
 
-	#If usage above 25 GB skip the home folder
+	#If usage above 10 GB skip the home folder
 	else
-		echo -e "${RED}Disk usage over 20GB, packaging account without home:${NC}"
+		echo -e "${RED}Disk usage over 10GB, packaging account without home:${NC}"
 		/usr/local/cpanel/bin/cpuwatch 8 /scripts/pkgacct --skiphomedir $user;
 		chown $user:$user /home/cpmove-$user.tar.gz;
 		chmod 644 /home/cpmove-$user.tar.gz;
