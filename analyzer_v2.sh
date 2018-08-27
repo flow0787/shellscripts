@@ -24,7 +24,7 @@ elif [[ $# -gt 2 ]]; then
 elif ! [[ $days =~ $re ]]; then
 	echo -e "Days, the second script argument must be one or two digit number! Exitting ..."
 	exit 0
-elif [[ $# -eq 1 ]]
+elif [[ $# -eq 1 ]]; then
 	echo -e "Days was not provided as an argument. Reverting to default, 5!"
 	days=5
 fi
