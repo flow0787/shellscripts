@@ -41,6 +41,13 @@ function general_info(){
 	echo ;
 }
 
+#Getting cron job information
+function cron_info(){
+	echo " === Cron Job Info ============="; 
+	crontab -u $user -l;
+	echo;
+}
+
 #Getting domain information
 function domains_info(){
 	echo " === Domains Information ======";
@@ -58,11 +65,11 @@ function cl_faults(){
 	echo;
 }
 
-#Getting top 3 most intensive domains for the entire month
+#Getting top 5 most intensive domains for the entire month
 function top_three(){
 	echo " === Top 3 Active Domains for the Entire Month ============";
 	echo -en "          Domain                Hits     GET      POST   OTHER \n------------------------       -----    ------    -----   -----\n";	
-	for i in $(ls -hS $path | grep gz| head -3)
+	for i in $(ls -hS $path | grep gz| head -5)
 	do 
 			#echo -e $(echo -en $i) " \t : \t"$(zcat $path/$i|wc -l)
 			echo -e $(echo -en $i|cut -d - -f1) " \t"$(zcat $path/$i|wc -l) " \t" $(zcat $path/$i|grep GET -c) "\t" $(zcat $path/$i|grep POST -c) "\t" $(zcat $path/$i|egrep "HEAD|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH" -c)
@@ -75,7 +82,7 @@ function top_three(){
 
 #Getting top 10 IPs and user agent for all domains for the last 5 days
 function top_ten_ip(){
-	echo " === Top 10 IP Addresses ================================";
+	echo " === Top 10 IP Addresses and User Agents ===================";
 	if [[ $(zcat $path/* |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $1, $12, $18}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
 		echo "There is no traffic to show for the past 5 days ... ";
 	else
@@ -83,6 +90,18 @@ function top_ten_ip(){
 	fi
 	echo ;
 }
+
+#Getting top 10 IPs only for all domains for the last 5 days
+function top_ten_ip_no_ua(){
+	echo " === Overall Top 10 IP Addresses without UA =================";
+	if [[ $(zcat $path/* |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $1}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
+		echo "There is no traffic to show for the past 5 days ... ";
+	else
+		zcat $path/* |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $1}' | sort | uniq -c | sort -fr | head
+	fi
+	echo ;
+}
+
 
 #Getting top 10 IPs and user agent for top 3 most intensive domains for past 5 days
 #function top_ten_three(){
