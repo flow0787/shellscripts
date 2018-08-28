@@ -61,6 +61,13 @@ function cron_info(){
 	echo;
 }
 
+#Getting CloudLinux limits for the $user
+function get_cllimits(){
+	echo " === CloudLinux Limits for $user ============";
+	lvectl list-user | head -1 ; lvectl list-user | grep $user
+	echo
+}
+
 #Getting domain information
 function domains_info(){
 	echo " === Domains Information ======";
@@ -166,6 +173,7 @@ elif grep -q $user /etc/trueuserowners; then
 	general_info
 	domains_info
 	cron_info
+	get_cllimits
 	cl_faults
 	top_five
 	top_ten_ip
