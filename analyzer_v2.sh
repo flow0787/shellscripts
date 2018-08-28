@@ -107,7 +107,7 @@ function top_ten_ip(){
 		if [[ $(zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y")" ' { if ($4 > Date) print $1, $12, $18}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
 			echo "There is no traffic to show for the past $days days ... ";
 		else
-			zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y")" ' { if ($4 > Date) print $1, $12, $15, $16, $17, $23, $24}' | sort | uniq -c | sort -fr | head
+			zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y")" ' { if ($4 > Date) print $1, $12, $15, $16, $17, $23, $24}' |sort|uniq -c|sort -n -k1 -fr| head
 		fi
 	else
 		if [[ $(cat $path/* |awk  '{print $1, $12, $18}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
@@ -126,7 +126,7 @@ function top_ten_ip_no_ua(){
 		if [[ $(zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y")" ' { if ($4 > Date) print $1}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
 			echo "There is no traffic to show for the past $days days ... ";
 		else
-			zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y")" ' { if ($4 > Date) print $1}' | sort | uniq -c | sort -fr | head
+			zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y")" ' { if ($4 > Date) print $1}' |sort|uniq -c|sort -n -k1 -fr| head
 		fi
 	else
 		if [[ $(cat $path/* |awk '{print $1}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
@@ -145,7 +145,7 @@ function top_ten_content(){
 		if [[ $(zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y")" ' { if ($4 > Date) print $7}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
 			echo "There is no traffic to show for the past $days days ... ";
 		else
-			zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y")" ' { if ($4 > Date) print $7}'|sed 's/?.*//' | sort | uniq -c | sort -fr | head
+			zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y")" ' { if ($4 > Date) print $7}'|sed 's/?.*//' |sort|uniq -c|sort -n -k1 -fr| head
 		fi
 	else
 		if [[ $(cat $path/* |awk '{print $7}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
