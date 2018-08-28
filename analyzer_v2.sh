@@ -58,7 +58,6 @@ function general_info(){
 function cron_info(){
 	echo " === Cron Job Info ============"; 
 	crontab -u $user -l;
-	echo;
 }
 
 #Getting CloudLinux limits for the $user
