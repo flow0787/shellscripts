@@ -113,7 +113,7 @@ function top_ten_ip(){
 		if [[ $(cat $path/* |awk  '{print $1, $12, $18}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
 			echo "There is no traffic to show for the past $days days ... ";
 		else
-			cat $path/* |awk '{print $1, $12, $15, $16, $17, $23, $24}' | sort | uniq -c | sort -fr | head
+			cat $path/* |awk '{print $1, $12, $15, $16, $17, $23, $24}' |sort|uniq -c|sort -n -k1 -fr| head
 		fi
 	fi
 	echo ;
@@ -132,7 +132,7 @@ function top_ten_ip_no_ua(){
 		if [[ $(cat $path/* |awk '{print $1}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
 			echo "There is no traffic to show for the past $days days ... ";
 		else
-			cat $path/* |awk '{print $1}' | sort | uniq -c | sort -fr | head
+			cat $path/* |awk '{print $1}' |sort|uniq -c|sort -n -k1 -fr| head
 		fi
 	fi
 	echo ;
@@ -151,7 +151,7 @@ function top_ten_content(){
 		if [[ $(cat $path/* |awk '{print $7}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
 			echo "There is no traffic to show for the past $days days ... ";
 		else
-			cat $path/* |awk '{print $7}'|sed 's/?.*//' | sort | uniq -c | sort -fr | head
+			cat $path/* |awk '{print $7}'|sed 's/?.*//' |sort|uniq -c|sort -n -k1 -fr| head
 		fi
 	fi
 }
