@@ -1,5 +1,18 @@
 #!/bin/bash
-### Adds an IP to DENY chain in iptables - /root/admin/sgfirewall ###
+# Description     : A shell script that adds an IP/range or PORT to DENY or ALLOW chain in 
+#                   iptables /root/admin/sgfirewall version 3
+# Usage           : ./bwlistv2.sh $ip
+#				    ./bwlistv2.sh $ip/mask 
+#					./bwlistv2.sh $ip $port
+#---------------------------------------------------------------------------------#
+# Author		  : Florin Badea
+# Source		  : https://github.com/flow0787/shellscripts
+#---------------------------------------------------------------------------------#
+# Date            : sometime in 2017
+# Requirements    : SHELL + iptables
+# References      : N/A
+#=================================================================================#
+
 ### WORK IN PROGRES ##
 
 #COLORS

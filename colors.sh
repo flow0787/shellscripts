@@ -1,6 +1,15 @@
 #!/bin/bash
+# Description     : This script echoes colors and codes
+# Usage           : ./colors.sh
+#---------------------------------------------------------------------------------#
+# Author		  : Florin Badea
+# Source		  : https://github.com/flow0787/shellscripts
+#---------------------------------------------------------------------------------#
+# Date            : sometime in 2017
+# Requirements    : SHELL
+# References      : N/A
+#=================================================================================#
 
-# This script echoes colors and codes
 
 #Colors stored into variables with appropriate name
 BLACK='\033[0;30m'

@@ -1,5 +1,14 @@
 #!/bin/bash
-#Script to change root password with a backup of shadow file#
+# Description     : A shell script that changes root password with a backup of shadow file
+# Usage           : ./changerootpass.sh
+#---------------------------------------------------------------------------------#
+# Author		  : Florin Badea
+# Source		  : https://github.com/flow0787/shellscripts
+#---------------------------------------------------------------------------------#
+# Date            : sometime in 2017
+# Requirements    : SHELL + iptables
+# References      : N/A
+#=================================================================================#
 
 clear;
 NC='\033[0m' 

@@ -1,6 +1,18 @@
 #!/bin/bash
-### Adds an IP to DENY chain in iptables - /root/admin/sgfirewall ###
+# Description     : A shell script that adds an IP or range to DENY chain in iptables
+#				    /root/admin/sgfirewall
+# Usage           : ./blacklistip.sh $ip
+#				  : ./blacklistip.sh $ip/mask 
+#---------------------------------------------------------------------------------#
+# Author		  : Florin Badea
+# Source		  : https://github.com/flow0787/shellscripts
+#---------------------------------------------------------------------------------#
+# Date            : sometime in 2017
+# Requirements    : SHELL + iptables
+# References      : N/A
+#=================================================================================#
 
+#Input verification && Usage information
 if [[ $# -eq 0 ]]; then
     echo "USAGE: $0 $TID IP.IP.IP.IP"
     echo "USAGE: $0 $TID IP.IP.IP.IP/mask"

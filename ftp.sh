@@ -1,4 +1,15 @@
-#FTP SITE TRANSFER SCRIPT#
+#!/bin/bash
+# Description     : This automates the process of transferring a site's files and folders via FTP
+# Usage           : ./ftp.sh
+#---------------------------------------------------------------------------------#
+# Author		  : Florin Badea
+# Source		  : https://github.com/flow0787/shellscripts
+#---------------------------------------------------------------------------------#
+# Date            : sometime in 2017
+# Updated         : 28-08-2018
+# Requirements    : SHELL + WGET
+# References      : N/A
+#=================================================================================#
 
 clear;
 BLUE='\033[0;34m'

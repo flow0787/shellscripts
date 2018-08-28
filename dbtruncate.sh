@@ -1,4 +1,16 @@
 #!/bin/bash
+# Description     : This empties the tables in a database without removing the database
+# Usage           : ./dbtruncate.sh $db_user $db_pass $db_name
+#---------------------------------------------------------------------------------#
+# Author		  : Florin Badea
+# Source		  : https://github.com/flow0787/shellscripts
+#---------------------------------------------------------------------------------#
+# Date            : sometime in 2017
+# Requirements    : SHELL + MySQL
+# References      : based on nixCraft database truncate script at https://bash.cyberciti.biz/
+#=================================================================================#
+
+
 MUSER="$1"
 MPASS="$2"
 MDB="$3"

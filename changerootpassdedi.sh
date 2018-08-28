@@ -1,6 +1,15 @@
 #!/bin/bash
-#Script to change root password with a backup of shadow file#
-#And reverting changes, after the password update#
+# Description     : A shell script that changes root password with a backup of shadow file
+#                   that waits and then reverts changes, after a key press
+# Usage           : ./changerootpassdedi.sh
+#---------------------------------------------------------------------------------#
+# Author		  : Florin Badea
+# Source		  : https://github.com/flow0787/shellscripts
+#---------------------------------------------------------------------------------#
+# Date            : sometime in 2017
+# Requirements    : SHELL
+# References      : N/A
+#=================================================================================#
 
 clear;
 NC='\033[0m' 

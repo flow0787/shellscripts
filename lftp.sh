@@ -1,5 +1,15 @@
 #!/bin/bash
-## LFTP/SFTP site transfer script. ##
+# Description     : This script automates the LFTP/sFTP transfers
+# Usage           : ./lftp.sh
+#---------------------------------------------------------------------------------#
+# Author		  : Florin Badea
+# Source		  : https://github.com/flow0787/shellscripts
+#---------------------------------------------------------------------------------#
+# Date            : sometime in 2017
+# Updated         : -
+# Requirements    : SHELL + lftp
+# References      : N/A
+#=================================================================================#
 
 clear;
 CYAN='\033[0;36m'

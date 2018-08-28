@@ -1,7 +1,14 @@
 #!/bin/bash
-### SCRIPT BY FLORIN BADEA ###
-### WILL ADD A DOMAIN TO YOUR HOSTS FILE ###
-### USAGE: $0 $IP $DOMAIN ###
+# Description     : This script adds a domain to your hosts file for purpose of testing
+# Usage           : ./hosts.sh $ip $domain
+#---------------------------------------------------------------------------------#
+# Author		  : Florin Badea
+# Source		  : https://github.com/flow0787/shellscripts
+#---------------------------------------------------------------------------------#
+# Date            : sometime in 2017
+# Requirements    : SHELL + access to /etc/hosts
+# References      : create an alias and run the script by calling hosts $ip $domain
+#=================================================================================#
 
 #//TODO:
 ####### - detect browser and flush cache per browser used

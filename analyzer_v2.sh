@@ -1,12 +1,15 @@
 #!/bin/bash
-# A shell script to review a cPanel account's traffic information and resource usage statistics 
-# Usage: ./analyzer.sh $user $days
-# -------------------------------------------------------------------------
-# Copyright (c) 2018 Florin Badea a bunch of helpful scripts project 
-# This script is licensed under GNU GPL version 2.0 or above
-# -------------------------------------------------------------------------
-# LOG FILTER:
-# https://stackoverflow.com/questions/7706095/filter-log-file-entries-based-on-date-range
+# Description     : A shell script to review a cPanel account's traffic information 
+#				    and resource usage statistics based on user and days - VERSION 2
+# Usage           : ./analyzer_v2.sh $user $days
+#---------------------------------------------------------------------------------#
+# Author		  : Florin Badea
+# Source		  : https://github.com/flow0787/shellscripts
+#---------------------------------------------------------------------------------#
+# Date            : 26-08-2018
+# Requirements    : SHELL + LVEINFO/CloudLinux
+# References      : https://stackoverflow.com/questions/7706095/filter-log-file-entries-based-on-date-range
+#=================================================================================#
 
 user=$1
 days=$2

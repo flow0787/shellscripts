@@ -1,5 +1,14 @@
-#!/bin/bash
-### Adds an IP to ALLOW chain in iptables - /root/admin/sgfirewall ###
+# Description     : This script adds an IP or range to iptables - /root/admin/sgfirewall
+# Usage           : ./intmig.sh $user $short_hostname
+#---------------------------------------------------------------------------------#
+# Author		  : Florin Badea
+# Source		  : https://github.com/flow0787/shellscripts
+#---------------------------------------------------------------------------------#
+# Date            : sometime in 2017
+# Updated         : -
+# Requirements    : SHELL + iptables
+# References      : N/A
+#=================================================================================#
 
 if [[ $# -eq 0 ]]; then
     echo "USAGE: $0 $TID IP.IP.IP.IP"

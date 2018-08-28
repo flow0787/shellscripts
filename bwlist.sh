@@ -1,4 +1,19 @@
 #!/bin/bash
+# Description     : A shell script that adds an IP or range to DENY chain in iptables
+#				    /root/admin/sgfirewall version 2
+# Usage           : ./bwlist.sh $ip
+#				  : ./bwlist.sh $ip/mask 
+#---------------------------------------------------------------------------------#
+# Author		  : Florin Badea
+# Source		  : https://github.com/flow0787/shellscripts
+#---------------------------------------------------------------------------------#
+# Date            : sometime in 2017
+# Requirements    : SHELL + iptables
+# References      : N/A
+#=================================================================================#
+
+
+#!/bin/bash
 ### Adds an IP to DENY chain in iptables - /root/admin/sgfirewall ###
 
 

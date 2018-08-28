@@ -1,18 +1,18 @@
 #!/bin/bash
-#description     : This script automates the internal account migrations
-#author		     : Florin Badea
-#date            : 03.08.2018
-#usage		     : ./intmig.sh $USER $SERV_SHORTNAME
-#requirements    : SHELL
-#=============================================================================
-
+# Description     : This script automates the internal account migrations
+# Usage           : ./intmig.sh $user $short_hostname
+#---------------------------------------------------------------------------------#
+# Author		  : Florin Badea
+# Source		  : https://github.com/flow0787/shellscripts
+#---------------------------------------------------------------------------------#
+# Date            : 03-08-2018
+# Updated         : -
+# Requirements    : SHELL + /scripts/pkgacct
+# References      : N/A
+#=================================================================================#
 
 #		TO-DO:
-#1. add hostname based download URL - done
 #2. do script arguments verification/validation - WIP
-#3. fix current domain-based download URL - done
-#4. fix the rsync generation url to show from source to dest and from dest to source - done
-#5. fix disk usage check (if 500MB it sees it above 20 GB and does skiphomedir) - done
 
 #COLORS
 GREEN='\033[0;32m'
