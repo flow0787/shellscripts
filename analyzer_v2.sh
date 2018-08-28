@@ -14,8 +14,8 @@
 user=$1
 days=$2
 path=/home/$user/logs
-re='^[0-9]{1,2}$'
-
+onetothirtyoneregex='^([1-9]|[12][0-9]|3[01])$'
+currentmonth=$(date | awk {'print $2'})
 
 #Arguments verification check
 if [[ $# -eq 0 ]]; then
@@ -24,12 +24,15 @@ if [[ $# -eq 0 ]]; then
 elif [[ $# -gt 2 ]]; then
 	echo -e "You provided more than 2 argument! Exitting ..."
 	exit 0
-elif ! [[ $days =~ $re ]]; then
-	echo -e "Days, the second script argument must be one or two digit number! Exitting ..."
+elif ! [[ $days =~ $onetothirtyoneregex ]]; then
+	echo -e "Days, the second script argument must be one or two digit number up to 31! Exitting ..."
 	exit 0
 elif [[ $# -eq 1 ]]; then
 	echo -e "Days was not provided as an argument. Exitting ...!"
 	exit 0
+#If days = 1 then change path to access-logs which holds stats for past 24 hrs
+elif [[ $days -eq 1 ]]; then
+	path=/home/$user/access-logs
 fi
 echo ;
 
@@ -71,65 +74,84 @@ function domains_info(){
 #Getting CloudLinux faults/info for the past $days days for the account
 function cl_faults(){
 	echo " === CL Faults for Past $days Days ===========================";
-	lveinfo --user $user --period "$days"d --time-unit 1d --show-columns From To NprocF EPf VMemF PMemF CPUf IOf IOPSf
+	if [[ $days -eq 1 ]]; then
+		lveinfo --user whate504 --period 24h --time-unit 1h --show-columns From To NprocF EPf VMemF PMemF CPUf IOf IOPSf
+	else
+		lveinfo --user $user --period "$days"d --time-unit 1d --show-columns From To NprocF EPf VMemF PMemF CPUf IOf IOPSf
+	fi
 	echo;
 }
 
-#Getting top 5 most intensive domains for the entire month
+#Getting top 5 most intensive domains for the entire current month
 function top_five(){
 	echo " === Top 5 Active Domains for the Entire Month ============";
-	echo -en "          Domain                Hits     GET      POST   OTHER \n------------------------       -----    ------    -----   -----\n";	
-	for i in $(ls -hS $path | grep gz| head -5)
+	echo -en "\t\tDomain \t\t\t\tHits \t\tGET\t\t POST\t\t OTHER \n----------------------------------\t\t-----\t\t-----\t\t -----\t\t -----\n";
+	if (ls $path/ | grep -q gz); then
+		for i in $(ls -hS $path | grep $currentmonth | head -5)
 	do 
-			#echo -e $(echo -en $i) " \t : \t"$(zcat $path/$i|wc -l)
-			echo -e $(echo -en $i|cut -d - -f1) " \t"$(zcat $path/$i|wc -l) " \t" $(zcat $path/$i|grep GET -c) "\t" $(zcat $path/$i|grep POST -c) "\t" $(zcat $path/$i|egrep "HEAD|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH" -c)
+			echo -e $(echo -en $i|cut -d - -f1) " \t\t\t"$(zcat $path/$i|wc -l) " \t\t" $(zcat $path/$i|grep GET -c) "\t\t" $(zcat $path/$i|grep POST -c) "\t\t" $(zcat $path/$i|egrep "HEAD|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH" -c)
 	done
+	else
+		for i in $(ls -hS $path | head -5)
+		do 
+			echo -e $(echo -en $i) " \t\t\t"$(cat $path/$i|wc -l) " \t\t" $(cat $path/$i|grep GET -c) "\t\t" $(cat $path/$i|grep POST -c) "\t\t" $(cat $path/$i|egrep "HEAD|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH" -c)
+		done
+	fi
 	echo ;
 }
 
-
-
-#Getting top 10 IPs and user agent for all domains for the last 5 days
+#Getting top 10 IPs and user agent for all domains for the last $days days
 function top_ten_ip(){
 	echo " === Top 10 IP and User Agents for Past $days Days ==========";
-	if [[ $(zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y:%H:%M:%S")" ' { if ($4 > Date) print $1, $12, $18}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
-		echo "There is no traffic to show for the past $days days ... ";
+	if (ls $path/ | grep -q gz); then
+		if [[ $(zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y")" ' { if ($4 > Date) print $1, $12, $18}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
+			echo "There is no traffic to show for the past $days days ... ";
+		else
+			zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y")" ' { if ($4 > Date) print $1, $12, $15, $16, $17, $23, $24}' | sort | uniq -c | sort -fr | head
+		fi
 	else
-		zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y:%H:%M:%S")" ' { if ($4 > Date) print $1, $12, $15, $16, $17, $23, $24}' | sort | uniq -c | sort -fr | head
+		if [[ $(cat $path/* |awk  '{print $1, $12, $18}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
+			echo "There is no traffic to show for the past $days days ... ";
+		else
+			cat $path/* |awk '{print $1, $12, $15, $16, $17, $23, $24}' | sort | uniq -c | sort -fr | head
+		fi
 	fi
 	echo ;
 }
 
-#Getting top 10 IPs only for all domains for the last 5 days
+#Getting top 10 IPs only for all domains for the last $days days
 function top_ten_ip_no_ua(){
 	echo " === Top 10 IP without UA for Past $days Days ===============";
-	if [[ $(zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y:%H:%M:%S")" ' { if ($4 > Date) print $1}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
-		echo "There is no traffic to show for the past $days days ... ";
+	if (ls $path/ | grep -q gz); then
+		if [[ $(zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y")" ' { if ($4 > Date) print $1}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
+			echo "There is no traffic to show for the past $days days ... ";
+		else
+			zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y")" ' { if ($4 > Date) print $1}' | sort | uniq -c | sort -fr | head
+		fi
 	else
-		zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y:%H:%M:%S")" ' { if ($4 > Date) print $1}' | sort | uniq -c | sort -fr | head
-	fi
+		if [[ $(cat $path/* |awk '{print $1}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
+			echo "There is no traffic to show for the past $days days ... ";
+		else
+			cat $path/* |awk '{print $1}' | sort | uniq -c | sort -fr | head
+		fi
 	echo ;
 }
 
-
-#Getting top 10 IPs and user agent for top 3 most intensive domains for past 5 days
-#function top_ten_three(){
-	#echo " === Top 10 IPs For Top 3 Sites For Past 5 Days =========";
-	#for i in $(ls -hS $path | head -3 | awk {'print $9'})
-	#do 
-	#		echo -en " --> " $i|cut -d - -f1; zcat $path/$i |awk -vDate=`date -d'now-5 days' +[%d/%b/%Y:%H:%M:%S` ' { if ($4 > Date) print $1, $12, $18}' | sort | uniq -c | sort -fr | head; echo -en "\n";
-	#done
-	#echo ;
-#}
-
-#Getting top 10 most accessed content for all sites for past 5 days
+#Getting top 10 most accessed content for all sites for past $days days
 function top_ten_content(){
 	echo " === Top 10 Most Accessed Content/Files for Past $days Days ==="; 
-	if [[ $(zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y:%H:%M:%S")" ' { if ($4 > Date) print $7}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
-		echo "There is no traffic to show for the past $days days ... ";
+	if (ls $path/ | grep -q gz); then	
+		if [[ $(zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y")" ' { if ($4 > Date) print $7}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
+			echo "There is no traffic to show for the past $days days ... ";
+		else
+			zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y")" ' { if ($4 > Date) print $7}'|sed 's/?.*//' | sort | uniq -c | sort -fr | head
+		fi
 	else
-		zcat $path/* |awk -vDate="$(date -d "now-$days days"  +"[%d/%b/%Y:%H:%M:%S")" ' { if ($4 > Date) print $7}'|sed 's/?.*//' | sort | uniq -c | sort -fr | head
-	fi
+		if [[ $(cat $path/* |awk '{print $7}' | sort | uniq -c | sort -fr | head | wc -l) -eq "0" ]]; then
+			echo "There is no traffic to show for the past $days days ... ";
+		else
+			cat $path/* |awk '{print $7}'|sed 's/?.*//' | sort | uniq -c | sort -fr | head
+		fi
 }
 
 
