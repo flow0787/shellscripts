@@ -58,6 +58,7 @@ function general_info(){
 function cron_info(){
 	echo " === Cron Job Info ============"; 
 	crontab -u $user -l;
+	echo ;
 }
 
 #Getting CloudLinux limits for the $user
@@ -80,8 +81,8 @@ function domains_info(){
 #Getting CloudLinux faults/info for the past $days days for the account
 function cl_faults(){
 	echo " === CL Faults for Past $days Days ===========================";
-	if [[ $days -eq 1 ]]; then
-		lveinfo --user whate504 --period 24h --time-unit 1h --show-columns From To NprocF EPf VMemF PMemF CPUf IOf IOPSf
+	if [[ "$days" -eq 1 ]]; then
+		lveinfo --user $user --period 24h --time-unit 1h --show-columns From To NprocF EPf VMemF PMemF CPUf IOf IOPSf
 	else
 		lveinfo --user $user --period "$days"d --time-unit 1d --show-columns From To NprocF EPf VMemF PMemF CPUf IOf IOPSf
 	fi
