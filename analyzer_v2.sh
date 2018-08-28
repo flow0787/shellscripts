@@ -134,6 +134,7 @@ function top_ten_ip_no_ua(){
 		else
 			cat $path/* |awk '{print $1}' | sort | uniq -c | sort -fr | head
 		fi
+	fi
 	echo ;
 }
 
@@ -152,6 +153,7 @@ function top_ten_content(){
 		else
 			cat $path/* |awk '{print $7}'|sed 's/?.*//' | sort | uniq -c | sort -fr | head
 		fi
+	fi
 }
 
 
