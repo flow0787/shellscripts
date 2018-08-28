@@ -63,8 +63,8 @@ function cron_info(){
 #Getting CloudLinux limits for the $user
 function get_cllimits(){
 	echo " === CloudLinux Limits for $user ============";
-	lvectl list-user | head -1 ; lvectl list-user | grep $user
-	echo
+	lvectl list-user 2> /dev/null | head -1 ; lvectl list-user | grep $user
+	echo ;
 }
 
 #Getting domain information

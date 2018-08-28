@@ -45,7 +45,7 @@ fi
 if grep -q $user /etc/trueuserowners; then
 #If account's disk usage below 10 GB
 	if [[ "$disk_usage" -le 10000000 ]]; then
-		echo -e "${GREEN}Disk usage under 20GB, starting pkgacct:${NC}"
+		echo -e "${GREEN}Disk usage under 10GB, starting pkgacct:${NC}"
 		/usr/local/cpanel/bin/cpuwatch 8 /scripts/pkgacct $user;
 		chown $user:$user /home/cpmove-$user.tar.gz;
 		chmod 644 /home/cpmove-$user.tar.gz;
