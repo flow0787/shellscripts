@@ -94,7 +94,7 @@ function top_five(){
 	else
 		for i in $(ls -hS $path | head -5)
 		do 
-			echo -e $(echo -en $i) " \t\t\t"$(cat $path/$i|wc -l) " \t\t" $(cat $path/$i|grep GET -c) "\t\t" $(cat $path/$i|grep POST -c) "\t\t" $(cat $path/$i|egrep "HEAD|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH" -c)
+			echo -e $(echo -en $i) " \t\t\t"$(cat $path/$i|wc -l) " \t\t" $(cat $path/$i|grep GET -c) " \t\t" $(cat $path/$i|grep POST -c) " \t\t" $(cat $path/$i|egrep "HEAD|PUT|DELETE|CONNECT|OPTIONS|TRACE|PATCH" -c)
 		done
 	fi
 	echo ;
