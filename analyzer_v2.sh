@@ -15,7 +15,7 @@ user=$1
 days=$2
 path=/home/$user/logs
 onetothirtyoneregex='^([1-9]|[12][0-9]|3[01])$'
-currentmonth=$(date | awk {'print $2'})
+currentmonth=$(date +"%-b")
 
 #Arguments verification check
 if [[ $# -eq 0 ]]; then
