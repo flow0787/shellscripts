@@ -41,6 +41,7 @@ elif [[ $1 =~ $domainregex ]]; then
 	else
 		echo "Domain does not exist on this server! Exitting ..."
 		exit 0
+	fi
 fi
 echo ;
 
