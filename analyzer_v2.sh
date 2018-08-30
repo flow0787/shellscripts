@@ -35,9 +35,9 @@ elif [[ $# -eq 1 ]]; then
 #If days = 1 then change path to access-logs which holds stats for past 24 hrs
 elif [[ $days -eq 1 ]]; then
 	path=/home/$user/access-logs
-elif [[ $1 =~ $domainregex ]]; then
-	if grep -q $1 /etc/userdomains; then
-		user=$(/scripts/whoowns $1)
+elif [[ $user =~ $domainregex ]]; then
+	if grep -q $user /etc/userdomains; then
+		user=$(/scripts/whoowns $user)
 	else
 		echo "Domain does not exist on this server! Exitting ..."
 		exit 0
