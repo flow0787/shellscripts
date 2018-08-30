@@ -16,7 +16,7 @@ days=$2
 path=/home/$user/logs
 onetothirtyoneregex='^([1-9]|[12][0-9]|3[01])$'
 currentmonth=$(date +"%-b")
-domainregex='^(?!:\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,11}?$'
+domainregex='^(?!:\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,11}?\b'
 
 
 #Arguments verification check
