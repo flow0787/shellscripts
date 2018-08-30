@@ -16,7 +16,7 @@ days=$2
 path=/home/$user/logs
 onetothirtyoneregex='^([1-9]|[12][0-9]|3[01])$'
 currentmonth=$(date +"%-b")
-domainregex='\b(?!:\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,11}?\b'
+#domainregex='\b(?!:\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,11}?\b'
 
 
 #Arguments verification check
@@ -35,13 +35,6 @@ elif [[ $# -eq 1 ]]; then
 #If days = 1 then change path to access-logs which holds stats for past 24 hrs
 elif [[ $days -eq 1 ]]; then
 	path=/home/$user/access-logs
-elif [[ $user =~ $domainregex ]]; then
-	if grep -q $user /etc/userdomains; then
-		user=$(/scripts/whoowns $user)
-	else
-		echo "Domain does not exist on this server! Exitting ..."
-		exit 0
-	fi
 fi
 echo ;
 
