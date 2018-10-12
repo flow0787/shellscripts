@@ -13,7 +13,7 @@
 
 user=$1
 days=$2
-path=/home/$user/logs
+path=/home*/$user/logs
 onetothirtyoneregex='^([1-9]|[12][0-9]|3[01])$'
 currentmonth=$(date +"%-b")
 #domainregex='\b(?!:\/\/)([a-zA-Z0-9-_]+\.)*[a-zA-Z0-9][a-zA-Z0-9-_]+\.[a-zA-Z]{2,11}?\b'
@@ -34,7 +34,7 @@ elif [[ $# -eq 1 ]]; then
 	exit 0
 #If days = 1 then change path to access-logs which holds stats for past 24 hrs
 elif [[ $days -eq 1 ]]; then
-	path=/home/$user/access-logs
+	path=/home*/$user/access-logs
 fi
 echo ;
 
